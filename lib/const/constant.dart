@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class Constant {
 
   // 接口地址
-  static String SERVER_API_URL = "http://127.0.0.1:33000";
+  static String SERVER_API_URL = "http://api.mikgeek.com";
 
 
   /// App运行在Release环境时，inProduction为true；当App运行在Debug和Profile环境时，inProduction为false
