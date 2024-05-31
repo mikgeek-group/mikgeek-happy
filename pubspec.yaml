@@ -67,6 +67,10 @@ dependencies:
 
   easy_refresh: ^3.4.0
 
+  # 视频下载
+  al_downloader: ^1.8.4
+
+
 
 dev_dependencies:
   flutter_test:

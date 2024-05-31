@@ -15,7 +15,7 @@ class HomeIndexController extends GetxController {
 
     ToastUtil.showLoading("加载中...");
 
-    state.vodPagination = await VodApi.list({"limit":"20","vodName":"庆余"});
+    state.vodPagination = await VodApi.list({"limit":"20"});
     state.init = true;
     ToastUtil.cancelLoading();
 
