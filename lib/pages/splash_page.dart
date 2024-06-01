@@ -51,17 +51,17 @@ class _SplashPageState extends State<SplashPage> {
     _db.deleteAgoRecord(DateTime.now().subtract(const Duration(days: 30)).millisecondsSinceEpoch);
 
     // 倒计时
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   setState(() {
-    //     if (_count <= 1) {
-    //       _timer?.cancel();
-    //       _timer = null;
-    //       _goMain();
-    //     } else {
-    //       _count -= 1;
-    //     }
-    //   });
-    // });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_count <= 1) {
+          _timer?.cancel();
+          _timer = null;
+          _goMain();
+        } else {
+          _count -= 1;
+        }
+      });
+    });
   }
 
   @override
@@ -87,6 +87,7 @@ class _SplashPageState extends State<SplashPage> {
             fit: BoxFit.fill,
             height: double.infinity,
           ),
+
           Positioned(
             bottom: 30,
             right: 20,
