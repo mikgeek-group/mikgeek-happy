@@ -1,47 +1,74 @@
-
+import 'package:bot_toast/bot_toast.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:get/get.dart';
-import 'package:happyapp/components/theme/theme.dart';
-import 'package:happyapp/router/route_page.dart';
-import 'package:sp_util/sp_util.dart';
+import 'package:provider/provider.dart';
+import 'package:happyapp/common/constant.dart';
+import 'package:happyapp/provider/app_info.dart';
+import 'package:happyapp/provider/category.dart';
+import 'package:happyapp/provider/download_task.dart';
+import 'package:happyapp/provider/source.dart';
+import 'package:happyapp/utils/application.dart';
 
-import 'bootstrap/bootstrap.dart';
-
-
-Future<void> main() async {
-  // 框架初始化
-  await Bootstrap.init();
-
+void main() {
   runApp(MyApp());
+
+  // 全局设置EasyRefresh
+  EasyRefresh.defaultHeaderBuilder = () => const MaterialHeader();
+  EasyRefresh.defaultFooterBuilder = () => const ClassicFooter(
+        dragText: '上拉加载',
+        armedText: '释放加载',
+        readyText: '正在加载...',
+        processingText: '正在加载...',
+        processedText: '加载完成',
+        noMoreText: '没有更多数据',
+        failedText: '加载失败',
+        messageText: '更新于 %T',
+      );
 }
 
-
-
 class MyApp extends StatelessWidget {
-  MyApp();
-
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /// Toast 配置
-    return GetMaterialApp(
-      title: 'HappyGo',
-      // showPerformanceOverlay: true, //显示性能标签
-      // 去除右上角debug的标签
-      debugShowCheckedModeBanner: false,
-      // checkerboardRasterCacheImages: true,
-      // showSemanticsDebugger: true, // 显示语义视图
-      // checkerboardOffscreenLayers: true, // 检查离屏渲染
-      theme: MkTheme.getTheme(isDarkMode: false),
-      // 首页路由初始化
-      initialRoute:  RoutePage.INITIAL,
-      getPages: RoutePage.routes,
-      navigatorObservers: [FlutterSmartDialog.observer],
-      // defaultTransition: Transition.,
-      builder:FlutterSmartDialog.init(),
-      // defaultTransition: Transition.,
+    Color? themeColor;
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppInfoProvider()),
+        ChangeNotifierProvider(create: (_) => SourceProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        // ChangeNotifierProvider(
+        //     create: (context) => DownloadTaskProvider(context)),
+      ],
+      child: Consumer<AppInfoProvider>(
+        builder: (context, appInfo, _) {
+          final String colorKey = appInfo.themeColor;
+          if (themeColorMap[colorKey] != null) {
+            themeColor = themeColorMap[colorKey];
+          }
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primaryColor: themeColor,
+              indicatorColor: Colors.white,
+              appBarTheme: AppBarTheme(
+                backgroundColor: themeColor,
+                elevation: 0
+              ),
+            ),
+            builder: BotToastInit(),
+            navigatorObservers: [
+              BotToastNavigatorObserver(),
+            ],
+            navigatorKey: Application.navigatorKey,
+            initialRoute: Application.splashPage,
+            onGenerateRoute: Application.generateRoute,
+          );
+        },
+      ),
     );
   }
 }

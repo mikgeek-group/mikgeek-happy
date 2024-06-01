@@ -2,17 +2,12 @@
 class Assets {
   Assets._();
 
-  static const String imagesNone = 'assets/images/none.jpeg';
-  static const String svgCirclePublish = 'assets/svg/circle_publish.svg';
-  static const String svgCirclePublishActive = 'assets/svg/circle_publish_active.svg';
-  static const String svgCommunication = 'assets/svg/communication.svg';
-  static const String svgCommunicationActive = 'assets/svg/communication_active.svg';
-  static const String svgHome = 'assets/svg/home.svg';
-  static const String svgHomeActive = 'assets/svg/home_active.svg';
-  static const String svgMessage = 'assets/svg/message.svg';
-  static const String svgMessageActive = 'assets/svg/message_active.svg';
-  static const String svgScanBlack = 'assets/svg/scan_black.svg';
-  static const String svgUser = 'assets/svg/user.svg';
-  static const String svgUserActive = 'assets/svg/user_active.svg';
+  static const String dataSource = 'assets/data/source.json';
+  static const String imageAvatar = 'assets/image/avatar.png';
+  static const String imageNodata = 'assets/image/nodata.png';
+  static const String imagePlaceholderL = 'assets/image/placeholder-l.jpg';
+  static const String imagePlaceholderP = 'assets/image/placeholder-p.jpg';
+  static const String imageSplashBg = 'assets/image/splash-bg.jpg';
+  static const String imageSplashBg2 = 'assets/image/splash-bg-2.jpg';
 
 }
